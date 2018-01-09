@@ -1,5 +1,7 @@
 package com.eventoapp.eventoapp.models;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -8,7 +10,10 @@ import javax.persistence.ManyToOne;
 public class Convidado {
 
     @Id
+    @NotEmpty
     private String rg;
+
+    @NotEmpty
     private String nomeConvidado;
 
     @ManyToOne
