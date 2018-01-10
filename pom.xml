@@ -55,11 +55,6 @@
 			<version>5.1.40</version>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.eventoapp</groupId>
-			<artifactId>eventoapp</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
 	</dependencies>
 
 
