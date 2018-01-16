@@ -34,13 +34,14 @@
             <p>Horário: <span th:text="${evento.horario}"></span></p>
         </div>
     </div>
-        <th:block th:include="mensagemValidacao"></th:block>
+
         <div class="container formConvidado">
-        <form method="post">
-            Nome: <input type="text" value="" name="nomeConvidado" placeholder="Nome completo"/>
-            RG: <input type="text" value="" name="rg" placeholder="AA 00.000.000-0"/>
-            <button class="waves-effect waves-light btn" type="submit">Adicionar convidado</button>
-        </form>
+            <form method="post">
+                Nome: <input type="text" value="" name="nomeConvidado" placeholder="Nome completo"/>
+                RG: <input type="text" value="" name="rg" placeholder="AA 00.000.000-0"/>
+                <button class="waves-effect waves-light btn" type="submit">Adicionar convidado</button>
+                <th:block th:include="mensagemValidacao"></th:block>
+            </form>
         </div>
 
     <table class="container tabelaConvidado">
