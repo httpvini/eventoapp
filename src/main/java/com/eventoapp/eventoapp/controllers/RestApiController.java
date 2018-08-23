@@ -17,13 +17,13 @@ public class RestApiController {
     private EventoRepository er;
 
     @GetMapping(value = "/evento/{codigo}")
-    public Evento restTest(@PathVariable("codigo") Long codigo){
+    public Evento consultaEvento(@PathVariable("codigo") Long codigo){
         Evento evento = er.findByCodigo(codigo);
         return evento;
     }
 
     @GetMapping(value = "/eventos")
-    public Iterable<Evento> restTestEventos(){
+    public Iterable<Evento> consultaEventos(){
         Iterable<Evento> eventos = er.findAll();
         return eventos;
     }
