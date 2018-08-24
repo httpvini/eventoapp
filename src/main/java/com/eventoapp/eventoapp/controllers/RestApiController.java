@@ -1,13 +1,13 @@
 package com.eventoapp.eventoapp.controllers;
 
+import com.eventoapp.eventoapp.models.Convidado;
 import com.eventoapp.eventoapp.models.Evento;
+import com.eventoapp.eventoapp.repository.ConvidadoRepository;
 import com.eventoapp.eventoapp.repository.EventoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/rest", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -16,15 +16,26 @@ public class RestApiController {
     @Autowired
     private EventoRepository er;
 
+    @Autowired
+    private ConvidadoRepository cr;
+
     @GetMapping(value = "/evento/{codigo}")
-    public Evento consultaEvento(@PathVariable("codigo") Long codigo){
+    public ResponseEntity<Evento> consultaEvento(@PathVariable("codigo") Long codigo){
         Evento evento = er.findByCodigo(codigo);
-        return evento;
+        return ResponseEntity.ok().body(evento);
     }
 
     @GetMapping(value = "/eventos")
-    public Iterable<Evento> consultaEventos(){
+    public ResponseEntity<?> consultaEventos(){
         Iterable<Evento> eventos = er.findAll();
-        return eventos;
+        return ResponseEntity.ok().body(eventos);
     }
+
+    @GetMapping(value = "/evento/{codigo}/convidados")
+    public ResponseEntity<Iterable<Convidado>> consultaConvidados(@PathVariable("codigo") Long codigo){
+        Evento evento = er.findByCodigo(codigo);
+        Iterable<Convidado> convidados = cr.findByEvento(evento);
+        return ResponseEntity.ok().body(convidados);
+    }
+
 }
