@@ -3,6 +3,7 @@
     padding-top: 20px;
     padding-left: 20px;
     margin-bottom: 60px;
+    margint-top: 100px;
 }
 
 .formConvidado{
@@ -21,10 +22,15 @@
     box-shadow: 0px 0px 5px grey;
     padding-top: 20px;
     padding-left: 20px;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
     margin-bottom: 60px;
+    margin-top: 20px;
 }
 
 .backgroundnavstyle{
 background-color: #4682B4;
+}
+
+.espaçamentologo{
+margin-left: 20px;
 }
