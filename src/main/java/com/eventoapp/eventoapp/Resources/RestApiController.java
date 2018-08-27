@@ -1,4 +1,4 @@
-package com.eventoapp.eventoapp.controllers;
+package com.eventoapp.eventoapp.Resources;
 
 import com.eventoapp.eventoapp.models.Convidado;
 import com.eventoapp.eventoapp.models.Evento;
