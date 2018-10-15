@@ -15,8 +15,8 @@ import javax.xml.stream.util.EventReaderDelegate;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/rest", produces = MediaType.APPLICATION_JSON_VALUE)
-public class RestApiController {
+@RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
+public class EventoResource {
 
     @Autowired
     private EventoRepository er;
