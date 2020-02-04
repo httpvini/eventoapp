@@ -1,9 +1,8 @@
-package com.eventoapp.eventoapp.controllers;
+package com.eventoapp.adapters.cadastrorest;
 
-import com.eventoapp.eventoapp.models.Convidado;
-import com.eventoapp.eventoapp.models.Evento;
-import com.eventoapp.eventoapp.repository.ConvidadoRepository;
-import com.eventoapp.eventoapp.repository.EventoRepository;
+import com.eventoapp.app.models.Convidado;
+import com.eventoapp.app.models.Evento;
+import com.eventoapp.app.services.EventoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -19,10 +18,7 @@ import javax.validation.Valid;
 public class EventoController {
 
     @Autowired
-    private EventoRepository er;
-
-    @Autowired
-    private ConvidadoRepository cr;
+    private EventoService eventoService;
 
     @RequestMapping(value = "/cadastrarEvento", method = RequestMethod.GET)
     public String form(){
@@ -31,45 +27,41 @@ public class EventoController {
 
     @RequestMapping(value = "/cadastrarEvento", method = RequestMethod.POST)
     public String form(@Valid Evento evento, BindingResult result, RedirectAttributes attributes){
-        if(result.hasErrors()){
-            attributes.addFlashAttribute("mensagem", "Verifique os campos!");
-            return "redirect:/cadastrarEvento";
-        }
-
-        er.save(evento);
+        String resultado = verificaErro(result, attributes);
+        eventoService.registraEvento(evento);
         attributes.addFlashAttribute("mensagem", "Evento cadastrado com sucesso!");
-        return "redirect:/cadastrarEvento";
+        return resultado;
     }
 
     @RequestMapping("/eventos")
     public ModelAndView listaEventos(){
         ModelAndView mv = new ModelAndView("index");
-        Iterable<Evento> eventos = er.findAll();
+        Iterable<Evento> eventos = eventoService.listaEventos();
         mv.addObject("evento", eventos);
         return mv;
     }
 
     @RequestMapping(value="/{codigo}", method = RequestMethod.GET)
     public ModelAndView detalhesEvento(@PathVariable("codigo") long codigo){
-        Evento evento = er.findByCodigo(codigo);
+        Evento evento = eventoService.buscaEvento(codigo);
         ModelAndView mv = new ModelAndView("evento/detalhesEvento");
         mv.addObject("evento", evento);
-        Iterable<Convidado> convidados = cr.findByEvento(evento);
+        Iterable<Convidado> convidados = eventoService.buscaConvidados(evento);
         mv.addObject("convidados", convidados);
         return mv;
     }
 
     @RequestMapping("/deletarEvento")
     public String deletarEvento(long codigo){
-        Evento evento = er.findByCodigo(codigo);
-        er.delete(evento);
+        Evento evento = eventoService.buscaEvento(codigo);
+        eventoService.removeEvento(evento);
         return "redirect:/eventos";
     }
 
     @RequestMapping("/deletarConvidado")
     public String deletarConvidado(String rg){
-        Convidado convidado = cr.findByRg(rg);
-        cr.delete(convidado);
+        Convidado convidado = eventoService.buscaConvidado(rg);
+        eventoService.removeConvidado(convidado);
 
         Evento evento = convidado.getEvento();
         long codigoLong = evento.getCodigo();
@@ -83,12 +75,19 @@ public class EventoController {
             attributes.addFlashAttribute("mensagem", "Verifique os campos!");
             return "redirect:/{codigo}";
         }
-        Evento evento = er.findByCodigo(codigo);
+        Evento evento = eventoService.buscaEvento(codigo);
         convidado.setEvento(evento);
-        cr.save(convidado);
+        eventoService.registraConvidado(convidado);
         attributes.addFlashAttribute("mensagem", "Convidado adicionado com sucesso!");
         return "redirect:/{codigo}";
     }
 
+    private String verificaErro(BindingResult result, RedirectAttributes attributes){
+        if(result.hasErrors()){
+            attributes.addFlashAttribute("mensagem", "Verifique os campos!");
+            return "redirect:/cadastrarEvento";
+        }
+        return "redirect:/cadastrarEvento";
+    }
 
 }
