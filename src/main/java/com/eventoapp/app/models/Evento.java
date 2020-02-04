@@ -1,4 +1,4 @@
-package com.eventoapp.eventoapp.models;
+package com.eventoapp.app.models;
 
 import org.hibernate.validator.constraints.NotEmpty;
 

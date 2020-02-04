@@ -1,22 +1,17 @@
-package com.eventoapp.eventoapp.Resources;
+package com.eventoapp.adapters.cadastrorest.restapi;
 
-import com.eventoapp.eventoapp.models.Convidado;
-import com.eventoapp.eventoapp.models.Evento;
-import com.eventoapp.eventoapp.repository.ConvidadoRepository;
-import com.eventoapp.eventoapp.repository.EventoRepository;
+import com.eventoapp.app.models.Convidado;
+import com.eventoapp.app.models.Evento;
+import com.eventoapp.adapters.evento.repository.ConvidadoRepository;
+import com.eventoapp.adapters.evento.repository.EventoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
-import javax.xml.stream.util.EventReaderDelegate;
-import java.util.Optional;
-
 @RestController
 @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
-public class EventoResource {
+public class EventoRestController {
 
     @Autowired
     private EventoRepository er;

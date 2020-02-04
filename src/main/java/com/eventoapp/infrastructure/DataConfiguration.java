@@ -1,4 +1,4 @@
-package com.eventoapp.eventoapp;
+package com.eventoapp.infrastructure;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.context.annotation.Bean;
